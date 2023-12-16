@@ -21,8 +21,10 @@ void main(){
   // Node? insertnode = linkedlist.nodeAt(1);
   // linkedlist.insertAfter(23, insertnode!);
 
-    final firstNode = linkedlist.nodeAt(0);
-  linkedlist.insertAfter(5, firstNode!);
+  final firstNode = linkedlist.nodeAt(0);
+  // linkedlist.insertAfter(5, firstNode!);
+
+  linkedlist.removeAfter(firstNode!);
   
   linkedlist.display();
 }
@@ -50,7 +52,6 @@ class SlinkedList{
       return;
     }
     tail!.next = Node(value);
-
     tail = tail!.next;
   }
 
