@@ -1,4 +1,4 @@
-//BELOW IS THE FIRST APPROACH TO FIND THE PAIR OF NUM HAVING SUM 1.
+//BELOW IS THE FIRST APPROACH TO FIND THE PAIR OF NUM HAVING SUM 10.
 //But, this approach has a Time Complexity of O(n^2) - Bcz we're having 2 for loops in the prog. But we can reduce the time complexity to O(n) using another prog.
 
 // Set<int> result(List list, int target){

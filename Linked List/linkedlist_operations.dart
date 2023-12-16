@@ -22,7 +22,7 @@ void main(){
   // linkedlist.insertAfter(23, insertnode!);
 
     final firstNode = linkedlist.nodeAt(0);
-  linkedlist.removeAfter(firstNode!);
+  linkedlist.insertAfter(5, firstNode!);
   
   linkedlist.display();
 }
