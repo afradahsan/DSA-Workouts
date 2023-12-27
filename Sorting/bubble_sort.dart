@@ -15,6 +15,6 @@ void bubblesort(List array){
         flag = 1;
       }
     }
-    if(flag==0) break;
+    if(flag==0) break; //why? to prevent unwanted looping of i, after the array is sorted.
   }
 }

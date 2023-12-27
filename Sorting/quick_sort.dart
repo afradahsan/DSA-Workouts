@@ -14,7 +14,7 @@ void quickSort(List array, int lb, int ub){
   }
 }
 
-int partition(List array, int ub, int lb){
+int partition(List array, int lb, int ub){
   int pivot = array[lb];
   int start = lb+1;
   int end = ub;
