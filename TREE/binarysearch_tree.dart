@@ -55,26 +55,44 @@ class BST{
     }
   }
 
-  bool contains(int data){
-    bool a = false;
+  // ignore this;
+  bool contain(int data){
     Node? currentNode = root;
     while(currentNode!=null){
     if(data == currentNode.data){
-      a = true;
+      return true;
     }
     if (data<currentNode.data!.toInt()) {
       currentNode = currentNode.left;
       if(currentNode!=null && currentNode.data == data){
-        a = true;
+        return true;
       }
     }
     else{
       currentNode = currentNode.right;
       if(currentNode!=null && currentNode.data == data){
-        a = true;
+        return true;
       }
     }}
-    return a;
+    return false;
+  }
+
+  //Simpler logic, than above:
+  
+  bool contains(int data){
+    Node? currentNode = root;
+    while (currentNode!=null) {
+      if(data==currentNode.data){
+        return true;
+      }
+      else if(data<currentNode.data!){
+        currentNode = currentNode.left;
+      }
+      else{
+        currentNode = currentNode.right;
+      }
+    }
+    return false;
   }
 }
 
@@ -83,8 +101,9 @@ void main(){
 
   bst.insert(10);
   bst.insert(5);
+  bst.insert(15);
 
   bst.displayInOrder();
 
-  print(bst.contains(1));
+  print(bst.contains(35));
 }
