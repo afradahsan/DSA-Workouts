@@ -54,6 +54,28 @@ class BST{
       _inOrderTraversal(root.right);
     }
   }
+
+  bool contains(int data){
+    bool a = false;
+    Node? currentNode = root;
+    while(currentNode!=null){
+    if(data == currentNode.data){
+      a = true;
+    }
+    if (data<currentNode.data!.toInt()) {
+      currentNode = currentNode.left;
+      if(currentNode!=null && currentNode.data == data){
+        a = true;
+      }
+    }
+    else{
+      currentNode = currentNode.right;
+      if(currentNode!=null && currentNode.data == data){
+        a = true;
+      }
+    }}
+    return a;
+  }
 }
 
 void main(){
@@ -61,7 +83,8 @@ void main(){
 
   bst.insert(10);
   bst.insert(5);
-  bst.insert(15);
 
   bst.displayInOrder();
+
+  print(bst.contains(1));
 }
