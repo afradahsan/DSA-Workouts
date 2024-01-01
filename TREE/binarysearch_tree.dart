@@ -23,7 +23,7 @@ class BST{
 
     while (true) {
       if(data<currentNode!.data!.toInt()){
-        if(currentNode.left ==null){
+        if(currentNode.left == null){
         currentNode.left = Node(data);
         break;
       }
@@ -55,7 +55,7 @@ class BST{
     }
   }
 
-  // ignore this;
+  /////////// ignore this; ⬇ /////////////////
   bool contain(int data){
     Node? currentNode = root;
     while(currentNode!=null){
@@ -94,6 +94,45 @@ class BST{
     }
     return false;
   }
+
+  Node? removeNode(Node? root, int data) {
+    if (root == null) {
+      return root;
+    }
+
+    if (data < root.data!) {
+      root.left = removeNode(root.left, data);
+    } else if (data > root.data!) {
+      root.right = removeNode(root.right, data);
+    } else {
+      // Node with only one child or no child
+      if (root.left == null) {
+        return root.right;
+      } else if (root.right == null) {
+        return root.left;
+      }
+
+      // Node with two children: Get the in-order successor (smallest in the right subtree)
+      root.data = minValue(root.right!);
+
+      // Delete the inorder successor
+      root.right = removeNode(root.right, root.data!);
+    }
+    return root;
+  }
+
+  int minValue(Node node) {
+    int minValue = node.data!;
+    while (node.left != null) {
+      minValue = node.left!.data!;
+      node = node.left!;
+    }
+    return minValue;
+  }
+
+  void remove(int data) {
+    root = removeNode(root, data);
+  }
 }
 
 void main(){
@@ -103,7 +142,11 @@ void main(){
   bst.insert(5);
   bst.insert(15);
 
+  bst.remove(10);
+
   bst.displayInOrder();
 
   print(bst.contains(35));
+
+  
 }
