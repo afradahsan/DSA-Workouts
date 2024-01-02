@@ -95,43 +95,46 @@ class BST{
     return false;
   }
 
-  Node? removeNode(Node? root, int data) {
-    if (root == null) {
-      return root;
-    }
-
-    if (data < root.data!) {
-      root.left = removeNode(root.left, data);
-    } else if (data > root.data!) {
-      root.right = removeNode(root.right, data);
-    } else {
-      // Node with only one child or no child
-      if (root.left == null) {
-        return root.right;
-      } else if (root.right == null) {
-        return root.left;
-      }
-
-      // Node with two children: Get the in-order successor (smallest in the right subtree)
-      root.data = minValue(root.right!);
-
-      // Delete the inorder successor
-      root.right = removeNode(root.right, root.data!);
-    }
-    return root;
+  remove(int data) {
+    root = _remove(root, data);
   }
 
-  int minValue(Node node) {
-    int minValue = node.data!;
-    while (node.left != null) {
-      minValue = node.left!.data!;
+  Node _findMin(Node node){
+    while (node.left!=null) {
       node = node.left!;
     }
-    return minValue;
+    return node;
   }
 
-  void remove(int data) {
-    root = removeNode(root, data);
+  Node? _remove(Node? node, int data) {
+    if (node == null) return null;
+
+    if (data < node.data!.toInt()) {
+      // navigating to the target to the left
+      node.left = _remove(node.left, data);
+    } else if (data > node.data!.toInt()) {
+      // navigating to the target to the right
+      node.right = _remove(node.right, data);
+    } else {
+      // data found
+      // 0 children? remove;
+      if (node.left == null && node.right == null) {
+        return null;
+      }
+
+      // 1 child? return child;
+      if (node.right == null) {
+        return node.left;
+      } else if (node.left == null) {
+        return node.right;
+      }
+
+      // 2 children? findMin, make it root;
+      Node? succesor = _findMin(node.right!);
+      node.data = succesor!.data;
+      node.right = _remove(node.right, succesor.data!);
+    }
+    return node;
   }
 }
 

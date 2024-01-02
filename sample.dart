@@ -1,95 +1,113 @@
-import 'Linked List/array-to-linklist.dart';
+class Node{
+  int? data;
 
-class Node {
-  int data;
-  Node? next;
+  Node? left;
+  Node? right;
 
-  Node(this.data, [this.next]);
+  Node(int data){
+    this.data = data;
+    left = null;
+    right = null;
+  }
 }
 
-class Linkedlist{
-  Node? head = null;
-  Node? tail = null;
+class BST{
+  Node? root;
 
-  void push(int value){
-    head = Node(value, head);
-    tail ??= head;
+  void displayInOrder() {
+    _inOrderTraversal(root);
   }
 
-  void append(int value){
-    if(head==null){
-      push(value);
+  void _inOrderTraversal(Node? root) {
+    if (root != null) {
+      _inOrderTraversal(root.left);
+      print(root.data);
+      _inOrderTraversal(root.right);
+    }
+  }
+
+  void insert(int data){
+    Node? currentNode = root;
+    if(root==null){
+      root = Node(data);
       return;
     }
-    tail!.next = Node(value);
-    tail = tail!.next;
-  }
 
-  Node? nodeAt(int index){
-    Node? currentNode = head;
-    int currentIndex = 0;
-
-    while (currentNode!=null && currentIndex<index) {
-      currentNode = currentNode.next;
-      currentIndex++;
+    while (true){
+      if(data<currentNode!.data!.toInt()){
+      if(currentNode.left == null){
+        currentNode.left = Node(data);
+        break;
+      }else{
+        currentNode = currentNode.left;
+      }
     }
-
-    return currentNode;
-  }
-
-  Node? insertAfter(int value, Node node){
-    if(tail==node){
-      append(value);
-      return tail;
-    }
-    node.next = Node(value, node.next);
-    return node.next;
-  }
-
-  
-
-  void pop(){
-    var temp = null;
-    if(head!=null){
-      temp = head!.next;
-      head!.next = null;
-      head = temp;
+      else{
+        if (currentNode.right == null) {
+          currentNode.right = Node(data);
+          break;
+        }
+        else{
+          currentNode = currentNode.right;
+        }
+      }
     }
   }
 
-  void display(){
-    Node? temp = head;
-    while (temp!=null) {
-      print(temp.data);
-      temp = temp.next;
-    }
+  void remove(int data){
+    root = removehelper(root, data);
   }
 
-  int removeAfter(Node node){
-    final value = node.next!.data;
-    if(node.next==tail){
-      tail = node;
+  Node minValue(Node node){
+    while (node.left!=null) {
+      node = node.left!;
+    }
+    return node;
+  }
+
+  Node? removehelper(Node? root, int data){
+    if(root==null){
+      return root;
     }
 
-    node.next = node.next!.next;
-    return value;
+    if (data<root.data!.toInt()) {
+      root.left = removehelper(root.left, data);
+    }
+    else if(data>root.data!.toInt()){
+      root.right = removehelper(root.right, data);
+    }else{
+      //3 Conditions:
+      // (i) Zero child
+      if(root.left == null && root.right == null){
+        return null;
+      }
+
+      // (ii) Only one child.
+      if(root.left == null){
+        return root.right;
+      }
+      if(root.right == null){
+        return root.left;
+      }
+
+      // (iii) Two childs.
+
+      Node? successor = minValue(root.right!);
+      root.data = successor.data;
+      root.right = removehelper(root.right, successor.data!);
+    }
+    return root;
   }
 }
 
 void main(){
-  Linkedlist linkedlist = Linkedlist();
+  BST bst = BST();
 
-  linkedlist.push(5);
-  linkedlist.push(6);
-  linkedlist.push(7);
-  linkedlist.push(8);
+  bst.insert(10);
+  bst.insert(5);
+  bst.insert(15);
 
-  linkedlist.append(2);
-  Node? nodeAt = linkedlist.nodeAt(2);
-  linkedlist.insertAfter(3, nodeAt!);
+  bst.remove(10);
 
-  linkedlist.pop();
-  
-
-  linkedlist.display();
+  bst.displayInOrder();
 }
