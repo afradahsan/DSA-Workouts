@@ -43,15 +43,11 @@ class BST{
     }
   }
 
-  void displayInOrder() {
-    _inOrderTraversal(root);
-  }
-
-  void _inOrderTraversal(Node? root) {
-    if (root != null) {
-      _inOrderTraversal(root.left);
+  void printInOrder(Node? root){
+    if(root != null){
+      printInOrder(root.left);
       print(root.data);
-      _inOrderTraversal(root.right);
+      printInOrder(root.right);
     }
   }
 
@@ -95,6 +91,24 @@ class BST{
     return false;
   }
 
+  bool isBST(Node root){
+    return isBSThelper(root, null, null);
+  }
+
+  bool isBSThelper(Node? root, int? max, int? min){
+    if(root == null){
+      return true;
+    }
+    if(min!=null && root.data!<min){
+      return false;
+    }
+    if(max!=null && root.data!>max){
+      return false;
+    }
+
+    return isBSThelper(root.left, root.data, min) && isBSThelper(root.right, max, root.data);
+  }
+
   remove(int data) {
     root = _remove(root, data);
   }
@@ -131,7 +145,7 @@ class BST{
 
       // 2 children? findMin, make it root;
       Node? succesor = _findMin(node.right!);
-      node.data = succesor!.data;
+      node.data = succesor.data;
       node.right = _remove(node.right, succesor.data!);
     }
     return node;
@@ -145,11 +159,14 @@ void main(){
   bst.insert(5);
   bst.insert(15);
 
-  bst.remove(10);
+  bst.printInOrder(bst.root);
 
-  bst.displayInOrder();
+  // bst.remove(10);
+  print(' ');
+
+  // bst.printInOrder(bst.root);
+
+  print(bst.isBST(bst.root!));
 
   print(bst.contains(35));
-
-  
 }
