@@ -51,6 +51,24 @@ class BST{
     }
   }
 
+  Node? closest(int target){
+    Node? closest = root;
+    Node? current = root;
+
+    while(current!=null){
+      if(current.data == target){
+      return current;
+    }
+
+    else if((current.data!-target).abs()<(closest!.data!-target).abs()){
+      closest = current;
+    }
+
+    current = target<current.data! ? current.left : current.right;
+    }
+    return closest;
+  }
+
   /////////// ignore this; ⬇ /////////////////
   bool contain(int data){
     Node? currentNode = root;
@@ -167,6 +185,9 @@ void main(){
   // bst.printInOrder(bst.root);
 
   print(bst.isBST(bst.root!));
+
+  Node? close = bst.closest(120);
+  print(close!.data);
 
   print(bst.contains(35));
 }
