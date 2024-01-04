@@ -19,7 +19,7 @@ class Heap{
   void buildHeap(List elements){
     this.elements = elements;
     for(int i=parent(elements.length-1); i>=0; i--){
-      heapifyDown(i);
+      heapifyDownwards(i);
     }
   }
 
