@@ -1,4 +1,4 @@
-class Heap{
+class MaxHeap{
 
   List elements = [];
 
@@ -47,6 +47,13 @@ class Heap{
     elements[largest] = temp;
   }
 
+  int remove(){
+    int top = elements[0];
+    elements[0] = elements.removeLast();
+    heapifyDownwards(0);
+    return top;
+  }
+
   void displaylist(){
     print(elements);
   }
@@ -56,7 +63,7 @@ class Heap{
 }
 
 void main(){
-  Heap heap = Heap();
+  MaxHeap heap = MaxHeap();
 
   // List elements = [8,5,6,10,4];
 
@@ -68,6 +75,8 @@ void main(){
   heap.insert(6);
   heap.insert(10);
   heap.insert(4);
+
+  print(heap.remove());
 
   heap.displaylist();
 }
